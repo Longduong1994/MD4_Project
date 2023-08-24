@@ -254,57 +254,26 @@
                                         <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Total</th>
-                                        <th><i class="ti-close"></i></th>
+                                        <th><i class="fa fa-trash" aria-hidden="true"></i></th>
                                     </tr>
                                     <tbody>
-                                        <tr>
-                                            <td class="cart-pic first-row"><img src="img/cart-page/product-1.jpg" alt=""></td>
+                                        <tr th:each="c,loop:${session.carts}">
+                                            <td class="cart-pic first-row"> <img th:src="@{|/image/${c.getProduct().image_url}|}" width="100px" alt="#"></td>
                                             <td class="cart-title first-row">
-                                                <h5>Pure Pineapple</h5>
+                                                <h5 th:text="${c.getProduct().getProduct_name()}"></h5>
                                             </td>
-                                            <td class="p-price first-row">$60.00</td>
+                                            <td class="p-price first-row" th:text="${c.getProduct().getExport_price()}"></td>
                                             <td class="qua-col first-row">
                                                 <div class="quantity">
                                                     <div class="pro-qty">
-                                                        <input type="text" value="1">
+                                                        <input type="text" th:value="${c.getQuantity()}">
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="total-price first-row">$60.00</td>
-                                            <td class="colse-td first-row"><i class="ti-close"></i></td>
+                                            <td class="total-price first-row" th:text="${c.totalPrice}"></td>
+                                            <td class="colse-td first-row"><a th:href="@{|/deleteCart/${c.getId()}|}"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
                                         </tr>
-                                        <tr>
-                                            <td class="cart-pic first-row"><img src="img/cart-page/product-2.jpg" alt=""></td>
-                                            <td class="cart-title first-row">
-                                                <h5>Pure Pineapple</h5>
-                                            </td>
-                                            <td class="p-price first-row">$60.00</td>
-                                            <td class="qua-col first-row">
-                                                <div class="quantity">
-                                                    <div class="pro-qty">
-                                                        <input type="text" value="1">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="total-price first-row">$60.00</td>
-                                            <td class="colse-td first-row"><i class="ti-close"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="cart-pic first-row"><img src="img/cart-page/product-3.jpg" alt=""></td>
-                                            <td class="cart-title first-row">
-                                                <h5>Pure Pineapple</h5>
-                                            </td>
-                                            <td class="p-price first-row">$60.00</td>
-                                            <td class="qua-col first-row">
-                                                <div class="quantity">
-                                                    <div class="pro-qty">
-                                                        <input type="text" value="1">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="total-price first-row">$60.00</td>
-                                            <td class="colse-td first-row"><i class="ti-close"></i></td>
-                                        </tr>
+
                                     </tbody>
                                 </thead>
                             </table>

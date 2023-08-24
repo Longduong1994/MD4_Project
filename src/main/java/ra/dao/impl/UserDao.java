@@ -26,6 +26,7 @@ public class UserDao implements IGenericDao<User,Integer> {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
                 user.setAvatar(rs.getString("avatar_url"));
                 user.setPhone(rs.getString("phone"));
                 user.setAddress(rs.getString("address"));
@@ -158,4 +159,39 @@ public class UserDao implements IGenericDao<User,Integer> {
             ConnectDB.closeConnection(conn);
         }
     }
+
+   public boolean checkUsername(String username){
+        Connection conn =null;
+        try {
+            conn = ConnectDB.getConnection();
+            CallableStatement callSt = conn.prepareCall("{call checkUser(?)}");
+            callSt.setString(1, username);
+            ResultSet rs = callSt.executeQuery();
+            if (rs.next()){
+                return false;
+            }
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }finally {
+            ConnectDB.closeConnection(conn);
+        }
+        return true;
+   }
+   public boolean checkEmail(String email){
+       Connection conn =null;
+       try {
+           conn = ConnectDB.getConnection();
+           CallableStatement callSt = conn.prepareCall("{call checkEmail(?)}");
+           callSt.setString(1, email);
+           ResultSet rs = callSt.executeQuery();
+           if (rs.next()){
+               return false;
+           }
+       }catch (Exception e){
+           throw new RuntimeException(e);
+       }finally {
+           ConnectDB.closeConnection(conn);
+       }
+       return true;
+   }
 }

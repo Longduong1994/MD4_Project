@@ -251,10 +251,12 @@
                                 <div class="group-input">
                                     <label for="username">User Name</label>
                                     <input type="text" id="username" th:field="*{username}">
+                                    <p style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                                 </div>
                                 <div class="group-input">
                                     <label for="pass">PassWord</label>
                                     <input type="password" id="pass" th:field="*{password}">
+                                    <p style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                                 </div>
                                 <div class="group-input gi-check">
                                     <div class="gi-more">

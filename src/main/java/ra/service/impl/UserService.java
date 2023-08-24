@@ -33,6 +33,13 @@ public class UserService  {
         userDao.save(user);
     }
 
+    public boolean checkUsername(String username) {
+      return   userDao.checkUsername(username);
+    }
+    public boolean checkEmail(String email) {
+        return userDao.checkEmail(email);
+    }
+
 
     public void delete(Long id) {
 
@@ -40,6 +47,7 @@ public class UserService  {
     public User login(FormLoginDto formLoginDto){
         return userDao.login(formLoginDto);
     }
+
     public void toggleUserStatus(int id){
         userDao.tongleUserStatus(id);
     }

@@ -2,7 +2,9 @@ package ra.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ra.dto.request.FormLoginDto;
 import ra.dto.request.FormRegisterDto;
 import ra.model.User;
+import ra.service.impl.ProductService;
 import ra.service.impl.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +23,8 @@ import javax.servlet.http.HttpSession;
 public class HomeController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/")
     public ModelAndView home() {
@@ -37,21 +42,27 @@ public class HomeController {
     }
 
     @PostMapping("/handle-login")
-    public String handleLogin(HttpSession session, @ModelAttribute("login_form") FormLoginDto formLoginDto, BindingResult bindingResult) {
-        User user = userService.login(formLoginDto);
-        if (user == null) {
-            return "redirect:/login";
-        } else if (user.getRole() == 1) {
-            return "redirect:/admin";
-        } else {
-            session.setAttribute("userlogin", user);
-            return "index";
+    public String handleLogin(HttpSession session, @ModelAttribute("login_form") FormLoginDto formLoginDto, BindingResult errors) {
+        // checkk validate
+        formLoginDto.checkValidate(errors,userService);
+        // kiểm tra bindingresult có nhận lỗi nào không
+        if(errors.hasErrors()){
+            return "login";
         }
+        User user = userService.login(formLoginDto);
+        if(user.getRole()==2){
+            session.setAttribute("userlogin",user);
+            return "index";
+        }else {
+            return "admin/index";
+        }
+
     }
 
     @GetMapping("/logout")
     public String getLogout(HttpSession session) {
         session.removeAttribute("userlogin");
+        session.removeAttribute("carts");
         return "redirect:/";
     }
 
@@ -61,18 +72,24 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("register_form") FormRegisterDto formRegisterDto) {
+    public String registerUser(@ModelAttribute("register_form") FormRegisterDto formRegisterDto, BindingResult errors) {
+        formRegisterDto.checkValidateRegister(errors, userService);
+        if (errors.hasErrors()) {
+            return "register";
+        }
         userService.save(formRegisterDto);
         return "redirect:/login";
     }
 
     @GetMapping("/shop")
-    public ModelAndView shop() {
+    public ModelAndView shop(Model model) {
+        model.addAttribute("products",productService.findAll());
         return new ModelAndView("shop");
     }
 
     @GetMapping("/shopping-cart")
-    public ModelAndView shoppingCart() {
+    public ModelAndView shoppingCart(HttpSession session) {
+
         return new ModelAndView("shopping-cart");
     }
 

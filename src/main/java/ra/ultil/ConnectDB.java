@@ -14,9 +14,7 @@ public class ConnectDB {
         try {
             Class.forName(DRIVER);
             conn= DriverManager.getConnection(URL,USER,PASSWORD);
-            System.out.println("okkkkkkkkkk");
         }catch (Exception e) {
-            System.out.println("xxxxxxxxxxxxx");
 
             e.printStackTrace();
         }

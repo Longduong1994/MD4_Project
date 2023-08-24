@@ -1,6 +1,8 @@
 package ra.dto.request;
 
 import org.springframework.validation.Errors;
+import ra.controller.HomeController;
+import ra.service.impl.UserService;
 
 public class FormLoginDto {
     private String username;
@@ -30,10 +32,16 @@ public class FormLoginDto {
         this.password = password;
     }
 
-    public void checkValidate(Errors errors) {
-        // kiểm tra trống
-        if (this.username.trim().equals("")){
+    public void checkValidate(Errors errors, UserService userService) {
+        // kiểm tra trường username có để trống hay không
+        if(this.username.trim().equals("")){
             errors.rejectValue("username","username.empty");
+        }else if(this.password.length()<8){
+            errors.rejectValue("password","password.invalid");
+        }else if(userService.login(this)==null){
+            errors.rejectValue("password","account.invalid");
+        }else if(userService.login(this).isStatus()==false){
+            errors.rejectValue("password","account.locked");
         }
     }
 }
