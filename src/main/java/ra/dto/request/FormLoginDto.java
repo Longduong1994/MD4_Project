@@ -1,5 +1,7 @@
 package ra.dto.request;
 
+import org.springframework.validation.Errors;
+
 public class FormLoginDto {
     private String username;
     private String password;
@@ -26,5 +28,12 @@ public class FormLoginDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void checkValidate(Errors errors) {
+        // kiểm tra trống
+        if (this.username.trim().equals("")){
+            errors.rejectValue("username","username.empty");
+        }
     }
 }

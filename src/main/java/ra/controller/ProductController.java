@@ -54,6 +54,10 @@ public class ProductController {
         p.setImport_price(formProductDto.getImport_price());
         p.setExport_price(formProductDto.getExport_price());
         p.setCatalog(formProductDto.getCatalog());
+        p.setSize(formProductDto.getSize());
+        p.setBrand(formProductDto.getBrand());
+        p.setColor(formProductDto.getColor());
+        p.setUser_object(formProductDto.getUser_object());
         p.setStatus(formProductDto.isStatus());
         productService.save(p);
         return "redirect:/product";
@@ -89,10 +93,17 @@ public class ProductController {
         p.setImport_price(formProductDto.getImport_price());
         p.setExport_price(formProductDto.getExport_price());
         p.setCatalog(formProductDto.getCatalog());
+        p.setSize(formProductDto.getSize());
+        p.setBrand(formProductDto.getBrand());
+        p.setColor(formProductDto.getColor());
+        p.setUser_object(formProductDto.getUser_object());
         p.setStatus(formProductDto.isStatus());
         productService.save(p);
         return "redirect:/product";
     }
 
-
+    @GetMapping("inform/{id}")
+    public ModelAndView informProduct(@PathVariable("id") int id){
+        return new  ModelAndView("redirect:/product","productInform", productService.findById(id));
+    }
 }

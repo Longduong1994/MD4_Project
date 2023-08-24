@@ -29,6 +29,10 @@ public class ProductService implements IGenericService<Product,Integer> {
                 product.setDescription(rs.getString("description"));
                 product.setStock(rs.getInt("stock"));
                 product.setCatalog(rs.getInt("catalog_id"));
+                product.setSize(rs.getInt("size_id"));
+                product.setBrand(rs.getInt("brand_id"));
+                product.setColor(rs.getInt("color_id"));
+                product.setUser_object(rs.getInt("object_id"));
                 product.setImport_date(rs.getDate("import_date"));
                 product.setImport_price(rs.getDouble("import_price"));
                 product.setExport_price(rs.getDouble("export_price"));
@@ -60,6 +64,10 @@ public class ProductService implements IGenericService<Product,Integer> {
                 product.setDescription(rs.getString("description"));
                 product.setStock(rs.getInt("stock"));
                 product.setCatalog(rs.getInt("catalog_id"));
+                product.setSize(rs.getInt("size_id"));
+                product.setBrand(rs.getInt("brand_id"));
+                product.setColor(rs.getInt("color_id"));
+                product.setUser_object(rs.getInt("object_id"));
                 product.setImport_date(rs.getDate("import_date"));
                 product.setImport_price(rs.getDouble("import_price"));
                 product.setExport_price(rs.getDouble("export_price"));
@@ -79,27 +87,35 @@ public class ProductService implements IGenericService<Product,Integer> {
         try {
             if(product.getId()==0){
                 conn = ConnectDB.getConnection();
-                CallableStatement callSt = conn.prepareCall("{call insertProduct(?,?,?,?,?,?,?)}");
+                CallableStatement callSt = conn.prepareCall("{call insertProduct(?,?,?,?,?,?,?,?,?,?,?)}");
                 callSt.setString(1,product.getProduct_name());
                 callSt.setString(2,product.getImage_url());
                 callSt.setString(3,product.getDescription());
                 callSt.setInt(4, product.getStock());
                 callSt.setInt(5,product.getCatalog());
-                callSt.setDouble(6,product.getImport_price());
-                callSt.setDouble(7,product.getExport_price());
+                callSt.setInt(6,product.getSize());
+                callSt.setInt(7,product.getBrand());
+                callSt.setInt(8,product.getColor());
+                callSt.setInt(9,product.getUser_object());
+                callSt.setDouble(10,product.getImport_price());
+                callSt.setDouble(11,product.getExport_price());
                 callSt.executeUpdate();
 
             }else {
                 conn = ConnectDB.getConnection();
-                CallableStatement callSt = conn.prepareCall("{call updateProduct(?,?,?,?,?,?,?,?)}");
+                CallableStatement callSt = conn.prepareCall("{call updateProduct(?,?,?,?,?,?,?,?,?,?,?,?)}");
                 callSt.setInt(1,product.getId());
                 callSt.setString(2,product.getProduct_name());
                 callSt.setString(3,product.getImage_url());
                 callSt.setString(4,product.getDescription());
                 callSt.setInt(5, product.getStock());
                 callSt.setInt(6,product.getCatalog());
-                callSt.setDouble(7,product.getImport_price());
-                callSt.setDouble(8,product.getExport_price());
+                callSt.setInt(7,product.getSize());
+                callSt.setInt(8,product.getBrand());
+                callSt.setInt(9,product.getColor());
+                callSt.setInt(10,product.getUser_object());
+                callSt.setDouble(11,product.getImport_price());
+                callSt.setDouble(12,product.getExport_price());
                 callSt.executeUpdate();
             }
         }catch (Exception e) {

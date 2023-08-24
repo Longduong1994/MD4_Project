@@ -21,13 +21,17 @@ public class Product {
     public Product() {
     }
 
-    public Product(int id, String product_name, String description, String image_url, int stock, int catalog, double import_price,double export_price, Date import_date, boolean status) {
+    public Product(int id, String product_name, String description, String image_url, int stock, int catalog, int size, int brand, int color, int user_object, double import_price, double export_price, Date import_date, boolean status) {
         this.id = id;
         this.product_name = product_name;
         this.description = description;
         this.image_url = image_url;
         this.stock = stock;
         this.catalog = catalog;
+        this.size = size;
+        this.brand = brand;
+        this.color = color;
+        this.user_object = user_object;
         this.import_price = import_price;
         this.export_price = export_price;
         this.import_date = import_date;
@@ -80,6 +84,38 @@ public class Product {
 
     public void setCatalog(int catalog) {
         this.catalog = catalog;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getBrand() {
+        return brand;
+    }
+
+    public void setBrand(int brand) {
+        this.brand = brand;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public int getUser_object() {
+        return user_object;
+    }
+
+    public void setUser_object(int user_object) {
+        this.user_object = user_object;
     }
 
     public double getImport_price() {

@@ -11,13 +11,13 @@
           content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="shortcut icon" href="img/icons/icon-48x48.png"/>
+    <link rel="shortcut icon" th:href="@{/img/icons/icon-48x48.png}"/>
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/"/>
 
-    <title>AdminKit Demo - Bootstrap 5 Admin Template</title>
+    <title>Admin - Bootstrap 5 Admin Template</title>
 
-    <link href="css/app.css" rel="stylesheet">
+    <link th:href="@{/css/app.css}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -338,7 +338,38 @@
                                 <!-- Thêm các tùy chọn danh mục khác tại đây -->
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label for="brand">Brand:</label>
+                            <select id="brand" name="brand" th:field="*{brand}">
+                                <option value=1>Zara</option>
+                                <option value=2>ADIDAS</option>
+                                <option value=3>NIKE</option>
+                                <option value=4>Uniqilo</option>
+                                <option value=5>Dior</option>
+                                <!-- Thêm các tùy chọn danh mục khác tại đây -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Color:</label>
+                            <select id="color" name="color" th:field="*{color}">
+                                <option value=1>Red</option>
+                                <option value=2>Black</option>
+                                <option value=3>Violet</option>
+                                <option value=4>Blue</option>
+                                <option value=5>Green</option>
+                                <option value=6>Yellow</option>
+                                <!-- Thêm các tùy chọn danh mục khác tại đây -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="object">For:</label>
+                            <select id="object" name="object" th:field="*{user_object}">
+                                <option value=1>Men</option>
+                                <option value=2>Women</option>
+                                <option value=3>Kid</option>
+                                <!-- Thêm các tùy chọn danh mục khác tại đây -->
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="stock">Stock:</label>
                             <input type="number" id="stock" name="stock" required th:field="*{stock}">

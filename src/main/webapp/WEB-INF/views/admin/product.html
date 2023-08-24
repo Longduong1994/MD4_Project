@@ -280,32 +280,35 @@
                                 <th>STT</th>
                                 <th>Product Name</th>
                                 <th>Image</th>
-                                <th>Description</th>
-                                <th>Import Date</th>
-                                <th>Import Price</th>
-                                <th>Export Price</th>
+                                <th>Size</th>
+                                <th>Brand</th>
+                                <th>Color</th>
                                 <th>Category</th>
+                                <th>For</th>
                                 <th>Status</th>
-                                <th colspan="2">Action</th> <!-- Một cột cho Action thay vì sử dụng colspan="2" -->
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="p,loop:${products}">
                                 <td th:text="${loop.count}"></td>
                                 <td th:text="${p.product_name}"></td>
-                                <td><img th:src="@{|/image/${p.getImage_url()}|}" width="20%" alt="#"></td>
-                                <td th:text="${p.getDescription()}"></td>
-                                <td th:text="${p.getImport_date()}"></td>
-                                <td th:text="${p.getImport_price()}"></td>
-                                <td th:text="${p.getExport_price()}"></td>
+                                <td><img th:src="@{|/image/${p.getImage_url()}|}" width="80px" alt="#"></td>
+                                <td th:text="${p.getSize()}"></td>
+                                <td th:text="${p.getBrand()}"></td>
+                                <td th:text="${p.getColor()}"></td>
                                 <td th:text="${p.getCatalog()}"></td>
+                                <td th:text="${p.getUser_object()}"></td>
                                 <td th:text="${p.isStatus()}"></td>
                                 <td>
+                                    <a th:href="@{|/inform/${p.id}|}" >
+                                        <button type="button" class="btn btn-primary tn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            Info
+                                        </button>
+                                    </a>
                                     <a th:href="@{|/edit/${p.id}|}" >
                                         <button type="button" class="btn btn-warning" >Edit</button>
                                     </a>
-                                </td>
-                                <td>
                                     <a th:href="@{|/delete/${p.id}|}">
                                         <button type="button" class="btn btn-danger" >Delete</button>
                                     </a>
@@ -314,6 +317,23 @@
                             </tbody>
 
                         </table>
+                    </div>
+<!--                    MODAL INFO-->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" >
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                     <nav aria-label="Page navigation example ">

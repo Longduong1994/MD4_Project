@@ -2,6 +2,7 @@ package ra.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class HomeController {
     }
 
     @PostMapping("/handle-login")
-    public String handleLogin(HttpSession session, @ModelAttribute("login_form") FormLoginDto formLoginDto) {
+    public String handleLogin(HttpSession session, @ModelAttribute("login_form") FormLoginDto formLoginDto, BindingResult bindingResult) {
         User user = userService.login(formLoginDto);
         if (user == null) {
             return "redirect:/login";

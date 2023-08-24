@@ -11,6 +11,10 @@ public class FormProductDto {
     private MultipartFile   image_url;
     private int stock;
     private int catalog;
+    private int size;
+    private int brand;
+    private int color;
+    private int user_object;
     private double import_price;
     private double export_price;
     private Date import_date;
@@ -19,13 +23,17 @@ public class FormProductDto {
     public FormProductDto() {
     }
 
-    public FormProductDto(int id, String product_name, String description, MultipartFile image_url, int stock, int catalog, double import_price, double export_price, Date import_date, boolean status) {
+    public FormProductDto(int id, String product_name, String description, MultipartFile image_url, int stock, int catalog, int size, int brand, int color, int user_object, double import_price, double export_price, Date import_date, boolean status) {
         this.id = id;
         this.product_name = product_name;
         this.description = description;
         this.image_url = image_url;
         this.stock = stock;
         this.catalog = catalog;
+        this.size = size;
+        this.brand = brand;
+        this.color = color;
+        this.user_object = user_object;
         this.import_price = import_price;
         this.export_price = export_price;
         this.import_date = import_date;
@@ -110,5 +118,37 @@ public class FormProductDto {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getBrand() {
+        return brand;
+    }
+
+    public void setBrand(int brand) {
+        this.brand = brand;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public int getUser_object() {
+        return user_object;
+    }
+
+    public void setUser_object(int user_object) {
+        this.user_object = user_object;
     }
 }
