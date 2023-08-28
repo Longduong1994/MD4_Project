@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -27,35 +26,12 @@
 
 </head>
 
-
 <body>
-<script>
-  function  formEdit(id){
-    $.ajax({
-      url:`http://localhost:8000/edit-catalog/${id}`,
-      method : "GET",
-      dataType : "json",
-      headers :{
-        'Accept': 'application/json'
-      },
-      success: function(data) {
-        console.log(data);
-        $('#id_edit').val(data.id);
-        $('#edit_catalog_name').val(data.catalog_name);
-        $('#editModal').modal('show');
-      },
-      error: function(error) {
-        console.error('Error:', error);
-      }
-    })
-  }
-</script>
-
 <div class="wrapper">
   <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-      <a class="sidebar-brand" th:href="@{/index}">
-        <span class="align-middle">AdminKit</span>
+      <a class="sidebar-brand" th:href="@{/admin}">
+        <span class="align-middle">Admin</span>
       </a>
 
       <ul class="sidebar-nav">
@@ -63,7 +39,7 @@
           Pages
         </li>
         <li class="sidebar-item active">
-          <a class="sidebar-link" href="#">
+          <a class="sidebar-link" th:href="@{/admin}">
             <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Dashboard</span>
           </a>
         </li>
@@ -206,7 +182,7 @@
                 <a href="#" class="list-group-item">
                   <div class="row g-0 align-items-center">
                     <div class="col-2">
-                      <img th:src="@{img/avatars/avatar-5.jpg}" class="avatar img-fluid rounded-circle"
+                      <img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle"
                            alt="Vanessa Tucker">
                     </div>
                     <div class="col-10 ps-2">
@@ -221,7 +197,7 @@
                 <a href="#" class="list-group-item">
                   <div class="row g-0 align-items-center">
                     <div class="col-2">
-                      <img th:src="@{img/avatars/avatar-2.jpg}" class="avatar img-fluid rounded-circle"
+                      <img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle"
                            alt="William Harris">
                     </div>
                     <div class="col-10 ps-2">
@@ -235,7 +211,7 @@
                 <a href="#" class="list-group-item">
                   <div class="row g-0 align-items-center">
                     <div class="col-2">
-                      <img th:src="@{img/avatars/avatar-4.jpg}" class="avatar img-fluid rounded-circle"
+                      <img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle"
                            alt="Christina Mason">
                     </div>
                     <div class="col-10 ps-2">
@@ -248,7 +224,7 @@
                 <a href="#" class="list-group-item">
                   <div class="row g-0 align-items-center">
                     <div class="col-2">
-                      <img th:src="@{img/avatars/avatar-3.jpg}" class="avatar img-fluid rounded-circle"
+                      <img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle"
                            alt="Sharon Lessman">
                     </div>
                     <div class="col-10 ps-2">
@@ -272,8 +248,8 @@
             </a>
 
             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-              <img th:src="@{img/avatars/avatar.jpg}" class="avatar img-fluid rounded me-1" alt="Charles Hall"/>
-              <span class="text-dark">ADMIN</span>
+              <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall"/>
+              <span class="text-dark"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-end">
               <a class="dropdown-item" href="#"><i class="align-middle me-1"
@@ -281,8 +257,8 @@
               <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i>
                 Analytics</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" th:href="@{/index}"><i class="align-middle me-1"
-                                                              data-feather="settings"></i> Settings &
+              <a class="dropdown-item" th:href="@{/admin}"><i class="align-middle me-1"
+                                                            data-feather="settings"></i> Settings &
                 Privacy</a>
               <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                                    data-feather="help-circle"></i> Help Center</a>
@@ -298,14 +274,12 @@
       <div class="container-fluid p-0">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title"> Category Table</h3>
+            <h3 class="card-title">Demo Product Table</h3>
             <nav class="navbar navbar-expand-lg bg-light">
               <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">+ Add new Category</button>
-                </a>
                 <form class="d-flex" role="search">
-                  <input class="form-control me-2 fst-italic" type="search" placeholder="Enter category's name... "
+                  <input class="form-control me-2 fst-italic" type="search"
+                         placeholder="Enter keyword.. "
                          aria-label="Search">
                   <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
@@ -318,29 +292,68 @@
               <thead>
               <tr>
                 <th>Number</th>
-                <th>Color</th>
-                <th colspan="2">Action</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>By Date</th>
+                <th>Buyer</th>
+                <th>Receiver</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
               </thead>
-              <tbody id="colors">
-              <tr th:each="c,loop:${colors}">
+              <tbody>
+              <tr th:each="o, loop: ${orders}">
                 <td th:text="${loop.count}"></td>
-                <td th:text="${c.color_name}"></td>
+                <td th:text="${o.product_name}"></td>
+                <td th:text="${o.quantity}"></td>
+                <td th:text="${o.price}"></td>
+                <td th:text="${o.date}"></td>
+                <td th:text="${o.byUser}"></td>
+                <td th:text="${o.receiver}"></td>
+                <td th:text="${o.phone}"></td>
+                <td th:text="${o.address}"></td>
                 <td>
-                  <a class="navbar-brand">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal" th:onclick="|formEdit('${c.id}')|">Edit</button>
+                  <span th:if="${o.status == false}">complete</span>
+                  <span th:unless="${o.status == false}">waiting</span>
+                </td>
+                <td th:if="${o.status == false}">
+                  <a th:href="@{|/confirm/${o.id}|}">
+                    <button type="button" class="btn btn-warning">Confirm</button>
                   </a>
                 </td>
-                <td>
-                  <a th:href="@{|/deleteColor/${c.id}|}" th:onclick="return confirm('Confirm delete this color')">
-                    <button type="button" class="btn btn-danger">Delete</button>
-                  </a>
-                </td>
+                <th th:unless="${o.status == false}">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                </th>
               </tr>
+
               </tbody>
 
             </table>
           </div>
+          <!--                    MODAL INFO-->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
           <nav aria-label="Page navigation example ">
             <ul class="pagination float-end mx-4">
               <li class="page-item disabled">
@@ -354,7 +367,6 @@
               </li>
             </ul>
           </nav>
-          <!-- /.card-body -->
         </div>
       </div>
     </main>
@@ -364,7 +376,7 @@
         <div class="row text-muted">
           <div class="col-6 text-start">
             <p class="mb-0">
-              <a class="text-muted" href="" target="_blank"><strong>Admin</strong></a>
+              <a class="text-muted" href="" target="_blank"><strong>DemoAdminKit</strong></a>
               - <a class="text-muted" href="" target="_blank"><strong>Bootstrap Admin
               Template</strong></a> &copy;
             </p>
@@ -391,46 +403,7 @@
   </div>
 </div>
 
-
-<!-- Modal Add -->
-<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Nội dung modal -->
-      <div class="modal-body">
-        <form id="addCategoryForm" th:action="@{/create-color}" method="post">
-          <div class="mb-3">
-            <label for="catalog_name" class="form-label">Category Name</label>
-            <input type="text" class="form-control" id="catalog_name" name="catalog_name" >
-          </div>
-          <button type="submit" class="btn btn-primary">Add</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal Edit -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Nội dung modal -->
-      <div class="modal-body">
-        <form id="editCategoryForm" th:action="@{/edit-catalog}" method="post">
-          <div class="mb-3">
-            <input type="hidden" class="form-control" id="id_edit" name="id_edit" >
-          </div>
-          <div class="mb-3">
-            <label for="edit_catalog_name" class="form-label">Category Name</label>
-            <input type="text" class="form-control" id="edit_catalog_name" name="edit_catalog_name" >
-          </div>
-          <button type="submit" class="btn btn-primary">Confirm</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script th:src="@{js/app.js}"></script>
+<script src="js/app.js"></script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -653,9 +626,8 @@
     });
   });
 </script>
-<script th:src="@{./js/category.js}"></script>
 
 </body>
 
->>>>>>> ec29542e3b58de09fae1b5010409bd981c248138
+
 </html>

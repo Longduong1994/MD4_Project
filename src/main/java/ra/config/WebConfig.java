@@ -26,7 +26,8 @@ import java.io.IOException;
 @EnableWebMvc
 @ComponentScan(basePackages = {"ra"})
 public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
-    private final String pathUpload= "C:\\Users\\Admin\\IdeaProjects\\MD4_Project\\src\\main\\webapp\\WEB-INF\\image\\";
+
+    private final String pathUpload="C:\\Users\\Admin\\IdeaProjects\\MD4_Project\\src\\main\\webapp\\WEB-INF\\image\\";
     private ApplicationContext applicationContext;
 
     @Override

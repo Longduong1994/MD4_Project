@@ -82,90 +82,90 @@
         </div>
 
         <!-- Chứa các thông tin Logo/ Thanh công cụ tìm kiếm/ và thông tin giỏ hàng -->
-        <div class="container">
-            <div class="inner-header">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="index.html">
-                                <img src="img/logo.png" height="25" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <button type="button" class="category-btn">
-                                Hiển thị tất cả
-                            </button>
-                            <div class="input-group">
-                                <input type="text" placeholder="Enter keywords, for example: skirts ">
-                                <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 text-right">
-                        <ul class="nav-right">
-                            <li class="heart-icon">
-                                <a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>1</span>
-                                </a>
-                            </li>
-                            <li class="cart-icon">
-                                <a href="#">
-                                    <i class="fa fa-shopping-bag" aria-hidden="true"> <span>3</span></i>
-                                </a>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x1</p>
-                                                            <h6>Kabino Bedsde Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x1</p>
-                                                            <h6>Kabino Bedsde Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-total">
-                                        <span>total: </span>
-                                        <h5>$120.00</h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="shopping-cart.html" class="primary-btn view-cart">VIEW CARD</a>
-                                        <a href="check-out.html" class="primary-btn view-cart">CHECK OUT</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="cart-price">
-                                $150.00
-                            </li>
-                        </ul>
+    <div class="container">
+        <div class="inner-header">
+            <div class="row">
+                <div class="col-lg-2 col-md-2">
+                    <div class="logo">
+                        <a th:href="@{/}">
+                            <img src="img/logo.png" height="25" alt="">
+                        </a>
                     </div>
                 </div>
+                <div class="col-lg-7 col-md-7">
+                    <div class="advanced-search">
+                        <button type="button" class="category-btn">
+                            Show All
+                        </button>
+                        <div class="input-group">
+                            <form th:action="@{/search}" method="post">
+                                <input type="text" placeholder="Enter keywords, for example: skirts" name="keyword">
+                                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 text-right">
+                    <ul class="nav-right">
+                        <li class="heart-icon">
+                            <a href="#">
+                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                <span></span>
+                            </a>
+                        </li>
+                        <li class="cart-icon">
+                            <a th:href="@{shopping-cart}">
+                                <i class="fa fa-shopping-bag" aria-hidden="true">
+                                    <span th:if="${session.carts}" th:text="${session.carts.size()}"></span>
+                                </i>
+                            </a>
+                            <div class="cart-hover" >
+                                <div class="select-items" >
+                                    <table>
+                                        <tbody>
+                                        <tr th:each="c,loop:${session.carts}">
+                                            <td class="si-pic"><img th:src="@{|/image/${c.getProduct().image_url}|}"
+                                                                    width="100px" alt="#"></td>
+                                            <td class="si-text">
+                                                <div class="product-selected">
+                                                    <p th:text="${c.getProduct().getExport_price()}"></p>
+                                                    <h6 th:text="${c.product.product_name}"></h6>
+                                                </div>
+                                            </td>
+                                            <td class="si-close">
+                                                <a th:href="@{|/deleteCart/${c.getId()}|}"><i class="fa fa-trash"
+                                                                                              aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
 
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="select-total">
+                                    <span>total: </span>
+                                    <h5>
+                                        <span th:if="${session.total != null}"> $</span>
+                                        <span th:text="${session.total}"></span>
+                                    </h5>
+                                </div>
+                                <div class="select-button">
+                                    <a th:href="@{shopping-cart}" class="primary-btn view-cart">VIEW CARD</a>
+                                    <a th:href="@{check-out}" class="primary-btn view-cart">CHECK OUT</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cart-price" th:if="${session.total != null}" th:text="'$' + ${session.total}">
+                            <span> $</span>
+                        </li>
+                        <li class="cart-price" th:unless="${session.total != null}">
+                            <span></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
         </div>
+    </div>
 
         <!-- Dòng menu lựa chọn chức năng màu đen -->
         <div class="nav-item">
@@ -181,7 +181,7 @@
                             <li><a href="#">Men's Fashion</a></li>
                             <li><a href="#">Women's Underwear</a></li>
                             <li><a href="#">Child Fashion</a></li>
-                            <li><a href="#">Codeleanon Brand</a></li>
+                            <li><a href="#">CodeLens Brand</a></li>
                             <li><a href="#">Fashion Accessories</a></li>
                             <li><a href="#">High End Brand</a></li>
                             <li><a href="#">Foreign Brand</a></li>
@@ -239,21 +239,20 @@
                                 <img src="img/blog/blog-1.jpg" alt="">
                             </div>
                             <div class="blog-detail-desc">
-                                <p>Tại đợt điều chỉnh này, cũng là lần tăng thứ 4 liên tiếp, 
-                                    liên Bộ Tài chính, 
-                                    Bộ Công Thương áp dụng giá xăng E5 RON 92 tăng 840 đồng/lít, 
-                                    lên 22.710 đồng/lít; 
-                                    xăng RON 95 tăng 1.110 đồng/lít, lên 23.860 đồng/lít. 
-                                    Giá dầu hỏa tăng lên 24.740 đồng/lít; 
-                                    dầu diesel giảm nhẹ xuống 24.980 đồng/lít; 
-                                    dầu mazut tăng lên 14.760 đồng/kg.
+                                <p>We work with monitoring programs to guarantee compliance with the social,
+                                    environmental, and health and safety standards of our products. To assess
+                                    its compliance, we have developed an audit
+                                </p>
+                                <p>
+                                    Jacket with lapel collar and long sleeves. Ripped detail and unfinished hem.
+                                    Washed effect. Front metal button closure.
                                 </p>
                             </div>
                             <div class="blog-quote">
                                 <p>
-                                    Liên bộ ngừng chi quỹ bình ổn giá, 
-                                    đồng thời trích lập quỹ bình ổn giá xăng dầu với xăng E5 RON 92 và xăng RON 95 ở mức 200 đồng/lít, 
-                                    dầu mazut 300 đồng/kg, không trích lập với dầu diesel và dầu hỏa <span>- Steven Jobs</span>
+                                    We work with monitoring programs to guarantee compliance with the social, environmental,
+                                    and health and safety
+                                    standards of our products. To assess its compliance, we have developed an audit
                                 </p>
                             </div>
                             <div class="blog-more">
@@ -324,8 +323,8 @@
                                         <h5>Shane Lynch</h5>
                                     </a>
                                     <p>
-                                        Chiều nay, theo dự kiến, Văn phòng Chính phủ tổ chức họp khẩn về điều hành xăng dầu vào 17h. 
-                                        Cuộc họp có sự góp mặt của nhiều bộ, ngành, do Phó Thủ tướng Lê Minh Khái và Phó Thủ tướng Lê Văn Thành đồng chủ trì.
+                                        Strapless corset style top. Flap patch pockets with button. Pronounced contrastin
+                                        g topstitching detail. Washed effect. Frayed hem. Front metal button closure.
                                     </p>
                                 </div>
                             </div>

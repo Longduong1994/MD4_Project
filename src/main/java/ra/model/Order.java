@@ -5,17 +5,15 @@ import java.util.Date;
 public class Order {
     private int id;
     private int user_id;
-    private int cartId;
     private Date export_Date;
     private boolean status;
 
     public Order() {
     }
 
-    public Order(int id, int user_id, int cartId, Date export_Date, boolean status) {
+    public Order(int id, int user_id, Date export_Date, boolean status) {
         this.id = id;
         this.user_id = user_id;
-        this.cartId = cartId;
         this.export_Date = export_Date;
         this.status = status;
     }
@@ -36,13 +34,6 @@ public class Order {
         this.user_id = user_id;
     }
 
-    public int getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
-    }
 
     public Date getExport_Date() {
         return export_Date;

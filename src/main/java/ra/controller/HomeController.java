@@ -5,16 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ra.dto.request.FormLoginDto;
+import ra.dto.request.FormOrderDto;
 import ra.dto.request.FormRegisterDto;
 import ra.model.User;
-import ra.service.impl.ProductService;
-import ra.service.impl.UserService;
+import ra.service.impl.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,6 +22,13 @@ public class HomeController {
     private UserService userService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CatalogService catalogService;
+    @Autowired
+    private HistoryService historyService;
+    @Autowired
+    private ObjectService objectService;
+
 
     @GetMapping("/")
     public ModelAndView home() {
@@ -32,8 +36,13 @@ public class HomeController {
     }
 
     @GetMapping("/admin")
-    public String getAdmin() {
-        return "admin/index";
+    public String getAdmin(HttpSession session) {
+        User userlogin = (User) session.getAttribute("userlogin");
+        int role = userlogin.getRole();
+        if(role ==1 ){
+            return "admin/index";
+        }
+     return "index";
     }
 
     @GetMapping("/login")
@@ -59,6 +68,7 @@ public class HomeController {
 
     }
 
+
     @GetMapping("/logout")
     public String getLogout(HttpSession session) {
         session.removeAttribute("userlogin");
@@ -72,7 +82,7 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("register_form") FormRegisterDto formRegisterDto, BindingResult errors) {
+    public String registerUser(@ModelAttribute("register_form") FormRegisterDto formRegisterDto, BindingResult errors,Model model) {
         formRegisterDto.checkValidateRegister(errors, userService);
         if (errors.hasErrors()) {
             return "register";
@@ -84,6 +94,8 @@ public class HomeController {
     @GetMapping("/shop")
     public ModelAndView shop(Model model) {
         model.addAttribute("products",productService.findAll());
+        model.addAttribute("catalog", catalogService.findAll());
+        model.addAttribute("objects", objectService.findAll());
         return new ModelAndView("shop");
     }
 
@@ -95,7 +107,7 @@ public class HomeController {
 
     @GetMapping("/check-out")
     public ModelAndView checkout() {
-        return new ModelAndView("check-out");
+        return new ModelAndView("check-out","order_form", new FormOrderDto());
     }
 
     @GetMapping("/blog")
@@ -107,16 +119,29 @@ public class HomeController {
     public ModelAndView blogDetails() {
         return new ModelAndView("blog-details");
     }
+    @GetMapping("/product-detail")
+    public String productDetail() {
+        return "product-detail";
+    }
 
     @GetMapping("/contact")
     public ModelAndView contact() {
         return new ModelAndView("contact");
     }
 
-    @GetMapping("/shop-product")
-    public ModelAndView product() {
-        return new ModelAndView("product-detail");
+
+    @GetMapping("/history")
+    public ModelAndView history(HttpSession session, Model model) {
+        User userlogin = (User) session.getAttribute("userlogin");
+        return new ModelAndView("history","orders",historyService.getOrderByUser(userlogin.getId()));
     }
+
+    @PostMapping("/search")
+    public ModelAndView getSearchName(@RequestParam("keyword") String keyword, Model model) {
+        model.addAttribute("catalog", catalogService.findAll());
+        return new ModelAndView("shop", "products", productService.searchProduct(keyword));
+    }
+
 
 
 }

@@ -23,7 +23,7 @@ public class CartService implements IGenericService<Cart,Integer> {
     @Override
     public Cart findById(Integer id) {
         for (Cart cart :carts){
-            if(cart.getProduct().getId()==id){
+            if(cart.getId()==id){
                 return cart;
             }
         }
@@ -37,6 +37,15 @@ public class CartService implements IGenericService<Cart,Integer> {
         }else{
             carts.set(carts.indexOf(findById(cart.getId())),cart);
         }
+    }
+
+    public Cart findByProductId(int id){
+        for (Cart c: carts) {
+            if(c.getProduct().getId()==id){
+                return c;
+            }
+        }
+        return null;
     }
 
     @Override

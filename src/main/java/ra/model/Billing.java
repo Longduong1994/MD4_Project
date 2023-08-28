@@ -3,6 +3,7 @@ package ra.model;
 public class Billing {
     private int id;
     private String  receiver;
+    private String zipcode;
     private String phone;
     private String address;
     private String ortherInfo;
@@ -11,9 +12,10 @@ public class Billing {
     public Billing() {
     }
 
-    public Billing(int id, String receiver, String phone, String address, String ortherInfo, int user_id) {
+    public Billing(int id, String receiver, String zipcode, String phone, String address, String ortherInfo, int user_id) {
         this.id = id;
         this.receiver = receiver;
+        this.zipcode = zipcode;
         this.phone = phone;
         this.address = address;
         this.ortherInfo = ortherInfo;
@@ -34,6 +36,14 @@ public class Billing {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
     public String getPhone() {

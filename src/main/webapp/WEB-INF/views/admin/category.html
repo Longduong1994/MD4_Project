@@ -4,29 +4,57 @@
 
 <head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-	<meta name="author" content="AdminKit">
-	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="shortcut icon" th:href="@{img/icons/icon-48x48.png}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" th:href="@{img/icons/icon-48x48.png}" />
 
-	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
+    <link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-	<title>AdminKit Demo - Bootstrap 5 Admin Template</title>
+    <title>Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-	<link th:href="@{css/app.css}" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link th:href="@{css/app.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script
+            src="https://code.jquery.com/jquery-3.7.0.js"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+            crossorigin="anonymous"></script>
+
 </head>
 
+
 <body>
+<script>
+    function  formEdit(id){
+        $.ajax({
+            url:`http://localhost:8000/edit-catalog/${id}`,
+            method : "GET",
+            dataType : "json",
+            headers :{
+                'Accept': 'application/json'
+            },
+            success: function(data) {
+                console.log(data);
+                $('#id_edit').val(data.id);
+                $('#edit_catalog_name').val(data.catalog_name);
+                $('#editModal').modal('show');
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        })
+    }
+</script>
+
 <div class="wrapper">
     <nav id="sidebar" class="sidebar js-sidebar">
         <div class="sidebar-content js-simplebar">
-            <a class="sidebar-brand" href="index.html">
+            <a class="sidebar-brand" th:href="@{/index}">
                 <span class="align-middle">AdminKit</span>
             </a>
 
@@ -34,23 +62,48 @@
                 <li class="sidebar-header">
                     Pages
                 </li>
-                <li class="sidebar-item ">
-                    <a class="sidebar-link" href="index.html">
+                <li class="sidebar-item active">
+                    <a class="sidebar-link" href="#">
                         <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item active">
-                    <a class="sidebar-link" href="#">
+                <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/category}">
                         <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Category</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="product.html">
+                    <a class="sidebar-link" th:href="@{/brand}">
+                        <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Brand</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/size}">
+                        <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Size</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/color}">
+                        <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Color</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/object}">
+                        <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Object</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/product}">
                         <i class="align-middle" data-feather="square"></i> <span class="align-middle">Product</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="user.html">
+                    <a class="sidebar-link" th:href="@{/order}">
+                        <i class="align-middle" data-feather="square"></i> <span class="align-middle">Order</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/user}">
                         <i class="align-middle" data-feather="user"></i> <span class="align-middle">User</span>
                     </a>
                 </li>
@@ -220,7 +273,7 @@
 
                         <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                             <img th:src="@{img/avatars/avatar.jpg}" class="avatar img-fluid rounded me-1" alt="Charles Hall"/>
-                            <span class="text-dark">Chris Hung</span>
+                            <span class="text-dark">ADMIN</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <a class="dropdown-item" href="#"><i class="align-middle me-1"
@@ -228,7 +281,7 @@
                             <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i>
                                 Analytics</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="index.html"><i class="align-middle me-1"
+                            <a class="dropdown-item" th:href="@{/index}"><i class="align-middle me-1"
                                                                           data-feather="settings"></i> Settings &
                                 Privacy</a>
                             <a class="dropdown-item" href="#"><i class="align-middle me-1"
@@ -276,10 +329,14 @@
                                 <td th:text="${c.id}"></td>
                                 <td th:text="${c.getCatalog_name()}"></td>
                                 <td>
-                                    <button type="button" class="btn btn-warning">Edit</button>
+                                    <a class="navbar-brand" >
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal"  th:onclick="|formEdit('${c.id}')|">Edit</button>
+                                    </a>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-danger">Delete</button>
+                                    <a th:href="@{|/deleteCatalog/${c.id}|}">
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -309,7 +366,7 @@
                 <div class="row text-muted">
                     <div class="col-6 text-start">
                         <p class="mb-0">
-                            <a class="text-muted" href="" target="_blank"><strong>DemoAdminKit</strong></a>
+                            <a class="text-muted" href="" target="_blank"><strong>Admin</strong></a>
                             - <a class="text-muted" href="" target="_blank"><strong>Bootstrap Admin
                             Template</strong></a> &copy;
                         </p>
@@ -336,69 +393,45 @@
     </div>
 </div>
 
-  
+
   <!-- Modal Add -->
-  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Category</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <!-- Nội dung modal -->
+            <div class="modal-body">
+                <form id="addCategoryForm" th:action="@{/create-catalog}" method="post">
+                    <div class="mb-3">
+                        <label for="catalog_name" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="catalog_name" name="catalog_name" >
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-                <label for="category_name" class="form-label">Category Name</label>
-                <input type="text" class="form-control" id="category_name">
-              </div>
-              <div class="mb-3">
-                <label for="description" class="form-label">Descriptions</label>
-                <textarea class="form-control" id="description" rows="3"></textarea>
-              </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="addNewCategory()">ADD</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
   <!-- Modal Edit -->
-  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="editModal">Edit Category</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <!-- Nội dung modal -->
+            <div class="modal-body">
+                <form id="editCategoryForm" th:action="@{/edit-catalog}" method="post">
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" id="id_edit" name="id_edit" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_catalog_name" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="edit_catalog_name" name="edit_catalog_name"  >
+                    </div>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-                <label for="category_id" class="form-label">Category ID</label>
-                <input type="text" class="form-control" id="category_id" disabled>
-              </div>
-            <div class="mb-3">
-                <label for="category_name" class="form-label">Category Name</label>
-                <input type="text" class="form-control" id="category_name_edit">
-              </div>
-              <div class="mb-3">
-                <label for="description" class="form-label">Descriptions</label>
-                <textarea class="form-control" id="description_edit" rows="3"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="createdDate" class="form-label">CreatedDate</label>
-                <input type="text" class="form-control" id="createdDate" readonly>
-              </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="updateCategory()">UPDATE</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
 <script th:src="@{js/app.js}"></script>
 
 <script>

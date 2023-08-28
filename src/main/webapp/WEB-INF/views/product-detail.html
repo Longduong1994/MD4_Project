@@ -82,90 +82,90 @@
         </div>
 
         <!-- Chứa các thông tin Logo/ Thanh công cụ tìm kiếm/ và thông tin giỏ hàng -->
-        <div class="container">
-            <div class="inner-header">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="index.html">
-                                <img src="img/logo.png" height="25" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <button type="button" class="category-btn">
-                                Hiển thị tất cả
-                            </button>
-                            <div class="input-group">
-                                <input type="text" placeholder="Enter keywords, for example: skirts ">
-                                <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 text-right">
-                        <ul class="nav-right">
-                            <li class="heart-icon">
-                                <a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>1</span>
-                                </a>
-                            </li>
-                            <li class="cart-icon">
-                                <a href="#">
-                                    <i class="fa fa-shopping-bag" aria-hidden="true"> <span>3</span></i>
-                                </a>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x1</p>
-                                                            <h6>Kabino Bedsde Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x1</p>
-                                                            <h6>Kabino Bedsde Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-total">
-                                        <span>total: </span>
-                                        <h5>$120.00</h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="shopping-cart.html" class="primary-btn view-cart">VIEW CARD</a>
-                                        <a href="check-out.html" class="primary-btn view-cart">CHECK OUT</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="cart-price">
-                                $150.00
-                            </li>
-                        </ul>
+    <div class="container">
+        <div class="inner-header">
+            <div class="row">
+                <div class="col-lg-2 col-md-2">
+                    <div class="logo">
+                        <a th:href="@{/}">
+                            <img src="img/logo.png" height="25" alt="">
+                        </a>
                     </div>
                 </div>
+                <div class="col-lg-7 col-md-7">
+                    <div class="advanced-search">
+                        <button type="button" class="category-btn">
+                            Show All
+                        </button>
+                        <div class="input-group">
+                            <form th:action="@{/search}" method="post">
+                                <input type="text" placeholder="Enter keywords, for example: skirts" name="keyword">
+                                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 text-right">
+                    <ul class="nav-right">
+                        <li class="heart-icon">
+                            <a href="#">
+                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                <span></span>
+                            </a>
+                        </li>
+                        <li class="cart-icon">
+                            <a th:href="@{shopping-cart}">
+                                <i class="fa fa-shopping-bag" aria-hidden="true">
+                                    <span th:if="${session.carts}" th:text="${session.carts.size()}"></span>
+                                </i>
+                            </a>
+                            <div class="cart-hover" >
+                                <div class="select-items" >
+                                    <table>
+                                        <tbody>
+                                        <tr th:each="c,loop:${session.carts}">
+                                            <td class="si-pic"><img th:src="@{|/image/${c.getProduct().image_url}|}"
+                                                                    width="100px" alt="#"></td>
+                                            <td class="si-text">
+                                                <div class="product-selected">
+                                                    <p th:text="${c.getProduct().getExport_price()}"></p>
+                                                    <h6 th:text="${c.product.product_name}"></h6>
+                                                </div>
+                                            </td>
+                                            <td class="si-close">
+                                                <a th:href="@{|/deleteCart/${c.getId()}|}"><i class="fa fa-trash"
+                                                                                              aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
 
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="select-total">
+                                    <span>total: </span>
+                                    <h5>
+                                        <span th:if="${session.total != null}"> $</span>
+                                        <span th:text="${session.total}"></span>
+                                    </h5>
+                                </div>
+                                <div class="select-button">
+                                    <a th:href="@{shopping-cart}" class="primary-btn view-cart">VIEW CARD</a>
+                                    <a th:href="@{check-out}" class="primary-btn view-cart">CHECK OUT</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cart-price" th:if="${session.total != null}" th:text="'$' + ${session.total}">
+                            <span> $</span>
+                        </li>
+                        <li class="cart-price" th:unless="${session.total != null}">
+                            <span></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
         </div>
+    </div>
 
         <!-- Dòng menu lựa chọn chức năng màu đen -->
         <div class="nav-item">
@@ -401,12 +401,12 @@
                                     
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="product-details">
+                            <div class="col-lg-6" >
+                                <div class="product-details" >
                                     <div class="pd-title">
                                         <span>Oranges</span>
-                                        <h3>Pure Pineapple</h3>
-                                        <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
+                                        <h3 ></h3>
+                                        <a href="#" class="heart-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                                     </div>
                                     <div class="pd-rating">
                                         <i class="fa fa-star"></i>
@@ -417,9 +417,7 @@
                                         <span>(4.5)</span>
                                     </div>
                                     <div class="pd-desc">
-                                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                                            Facilis, odio saepe magni adipisci optio rem fugiat aut natus unde sapiente culpa esse earum quos recusandae nisi rerum explicabo, 
-                                            aperiam nulla.</p>
+                                        <p ></p>
                                             <h4>$495.00 <span>$650.00</span></h4>
                                     </div>
                                     <div class="pd-color">

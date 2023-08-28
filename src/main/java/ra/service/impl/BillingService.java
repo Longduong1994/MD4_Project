@@ -2,7 +2,6 @@ package ra.service.impl;
 
 import org.springframework.stereotype.Service;
 import ra.model.Billing;
-import ra.model.Order;
 import ra.service.IGenericService;
 import ra.ultil.ConnectDB;
 
@@ -24,10 +23,11 @@ public class BillingService implements IGenericService<Billing, Integer> {
         Billing billing = null;
         try {
             connection = ConnectDB.getConnection();
-            CallableStatement callSt = connection.prepareCall("{findOrderById(?)}");
+            CallableStatement callSt = connection.prepareCall("{call findOrderById(?)}");
             callSt.setInt(1, id);
             ResultSet resultSet = callSt.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
+                billing = new Billing(); // Tạo một đối tượng Billing
                 billing.setId(resultSet.getInt("id"));
                 billing.setReceiver(resultSet.getString("receiver"));
                 billing.setPhone(resultSet.getString("phone"));
@@ -40,7 +40,7 @@ public class BillingService implements IGenericService<Billing, Integer> {
         } finally {
             ConnectDB.closeConnection(connection);
         }
-        return billing;
+        return billing; // Trả về đối tượng Billing hoặc null nếu không tìm thấy
     }
 
     @Override

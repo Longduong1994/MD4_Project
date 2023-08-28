@@ -4,15 +4,22 @@ public class Cart {
     private int id;
     private Product product;
     private int quantity;
-    private double totalPrice;
+    private Double totalPrice;
+
 
     public Cart() {
     }
 
-    public Cart(int id, Product product,  int quantity, double totalPrice) {
+    public Cart(int id, Product product,  int quantity) {
         this.id = id;
         this.product = product;
 
+        this.quantity = quantity;
+    }
+
+    public Cart(int id, Product product, int quantity, Double totalPrice) {
+        this.id = id;
+        this.product = product;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
     }
@@ -41,11 +48,11 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public double getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

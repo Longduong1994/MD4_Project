@@ -322,51 +322,37 @@
                         <div class="form-group">
                             <label for="category">Category:</label>
                             <select id="category" name="category" th:field="*{catalog}">
-                                <option value=1>Category 1</option>
-                                <option value=2>Category 2</option>
-                                <option value=3>Category 3</option>
+                                <option th:each="c : ${catalog}" th:value="${c.id}" th:text="${c.catalog_name}"></option>
                                 <!-- Thêm các tùy chọn danh mục khác tại đây -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="size">Size:</label>
                             <select id="size" name="size" th:field="*{size}">
-                                <option value=1>S</option>
-                                <option value=2>X</option>
-                                <option value=3>M</option>
-                                <option value=4>L</option>
+                                <option  th:each="s : ${sizes}" th:value="${s.id}" th:text="${s.size_name}"></option>
+
                                 <!-- Thêm các tùy chọn danh mục khác tại đây -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="brand">Brand:</label>
                             <select id="brand" name="brand" th:field="*{brand}">
-                                <option value=1>Zara</option>
-                                <option value=2>ADIDAS</option>
-                                <option value=3>NIKE</option>
-                                <option value=4>Uniqilo</option>
-                                <option value=5>Dior</option>
+                                <option th:each="b : ${brands}" th:value="${b.id}" th:text="${b.brand_name}"></option>
                                 <!-- Thêm các tùy chọn danh mục khác tại đây -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="color">Color:</label>
                             <select id="color" name="color" th:field="*{color}">
-                                <option value=1>Red</option>
-                                <option value=2>Black</option>
-                                <option value=3>Violet</option>
-                                <option value=4>Blue</option>
-                                <option value=5>Green</option>
-                                <option value=6>Yellow</option>
+                                <option th:each="color:${colors}" th:value="${color.id}" th:text="${color.color_name}"></option>
+
                                 <!-- Thêm các tùy chọn danh mục khác tại đây -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="object">For:</label>
                             <select id="object" name="object" th:field="*{user_object}">
-                                <option value=1>Men</option>
-                                <option value=2>Women</option>
-                                <option value=3>Kid</option>
+                                <option th:each="o : ${objects}" th:value="${o.id}" th:text="${o.object_name}">Men</option>
                                 <!-- Thêm các tùy chọn danh mục khác tại đây -->
                             </select>
                         </div>

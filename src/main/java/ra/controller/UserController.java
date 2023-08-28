@@ -16,8 +16,6 @@ public class UserController {
     private UserService userService;
     @GetMapping("/user")
     public ModelAndView getUsers(Model model){
-        System.out.println("aaa");
-        System.out.println(userService.findAll());
         model.addAttribute("users", userService.findAll());
         return new ModelAndView("admin/user");
     }

@@ -63,12 +63,12 @@ public class CatalogService implements IGenericService<Catalog,Integer> {
                 conn = ConnectDB.getConnection();
                 CallableStatement callSt = conn.prepareCall("{call insertCatalog(?)}");
                 callSt.setString(1, catalog.getCatalog_name());
-                callSt.execute();
+                callSt.executeUpdate();
             }else {
                 CallableStatement callSt = conn.prepareCall("{call updateCatalog(?,?)}");
                 callSt.setInt(1, catalog.getId());
                 callSt.setString(1, catalog.getCatalog_name());
-                callSt.execute();
+                callSt.executeUpdate();
             }
         }catch (Exception e) {
             throw new RuntimeException(e);

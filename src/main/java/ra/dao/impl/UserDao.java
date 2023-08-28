@@ -23,18 +23,16 @@ public class UserDao implements IGenericDao<User,Integer> {
             ResultSet rs = callSt.executeQuery();
             while (rs.next()){
                 User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setEmail(rs.getString("email"));
-                user.setAvatar(rs.getString("avatar_url"));
-                user.setPhone(rs.getString("phone"));
-                user.setAddress(rs.getString("address"));
-                user.setRole(rs.getInt("role_id"));
-                user.setStatus(rs.getBoolean("status"));
-                list.add(user);
+                if (user.getRole()!= 1){
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setEmail(rs.getString("email"));
+                    user.setRole(rs.getInt("role_id"));
+                    user.setStatus(rs.getBoolean("status"));
+                    list.add(user);
+                }
             }
-
         }catch (SQLException e){
             throw new RuntimeException(e);
         }finally {
@@ -62,15 +60,7 @@ public class UserDao implements IGenericDao<User,Integer> {
                 // thực thi câu lệnh sql
                 callSt.executeUpdate();
             }else {
-                // cập nhật
-                callSt = conn.prepareCall("{call updateUser(?,?,?,?)}");
-                callSt.setInt(1, user.getId());
-                callSt.setString(2,user.getAvatar());
-                callSt.setString(3,user.getPhone());
-                callSt.setString(4,user.getAddress());
-
-                // thực thi câu lệnh sql
-                callSt.executeUpdate();
+                //
             }
 
         }catch (SQLException e){
@@ -99,9 +89,7 @@ public class UserDao implements IGenericDao<User,Integer> {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
-                user.setAvatar(rs.getString("avatar"));
-                user.setPhone(rs.getString("phone"));
-                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
                 user.setRole(rs.getInt("role"));
                 user.setStatus(rs.getBoolean("status"));
             }
@@ -131,9 +119,7 @@ public class UserDao implements IGenericDao<User,Integer> {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
-                user.setAvatar(rs.getString("avatar_url"));
-                user.setPhone(rs.getString("phone"));
-                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
                 user.setRole(rs.getInt("role_id"));
                 user.setStatus(rs.getBoolean("status"));
             }

@@ -35,12 +35,12 @@ public class CartController {
         }
 
         Product product = productService.findById(id);
-        if (product == null) {
-            model.addAttribute("error", "Product not found.");
+        if (!product.isStatus()) {
+            model.addAttribute("error", "The product has not been updated. Please wait later");
             return "index";
         }
 
-        Cart cart = cartService.findById(product.getId());
+        Cart cart = cartService.findByProductId(id);
         if (cart == null) {
             cart = new Cart();
             cart.setId(cartService.newId());
@@ -54,7 +54,12 @@ public class CartController {
 
         cartService.save(cart);
         session.setAttribute("carts", cartService.findAll());
-        return "redirect:/";
+        double total = 0;
+        for (Cart c:cartService.findAll()) {
+            total += c.getTotalPrice();
+        }
+        session.setAttribute("total", total);
+        return "redirect:/shop";
     }
 
     @GetMapping("/deleteCart/{id}")
@@ -75,4 +80,20 @@ public class CartController {
         return "redirect:/shopping-cart";
     }
 
+
+    @PostMapping("/update/{id}")
+    public  String handleUpdate(HttpSession session,@PathVariable("id") int id, @RequestParam("quantity") int quantity){
+        Cart cart= cartService.findById(id);
+        cart.setQuantity(quantity);
+        cart.setTotalPrice(cart.getProduct().getExport_price()*cart.getQuantity());
+        cartService.save(cart);
+        // lưu vào session
+        session.setAttribute("cart",cartService.findAll());
+        double total = 0;
+        for (Cart c:cartService.findAll()) {
+            total += c.getTotalPrice();
+        }
+        session.setAttribute("total", total);
+        return "redirect:/shopping-cart";
+    }
 }
